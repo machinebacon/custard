@@ -1,0 +1,194 @@
+#
+# Default twm configuration file; needs to be kept small to conserve string
+# space in systems whose compilers don't handle medium-sized strings.
+#
+# Sites should tailor this file, providing any extra title buttons, menus, etc.
+# that may be appropriate for their environment.  For example, if most of the
+# users were accustomed to uwm, the defaults could be set up not to decorate
+# any windows and to use meta-keys.
+#
+
+Pixmaps
+{
+#    TitleHighlight "solid4x4"
+}
+MenuBorderWidth 1
+TitlePadding	1500
+ButtonIndent 0
+FramePadding 0
+RandomPlacement
+BorderWidth 1
+TitleButtonBorderWidth 0
+NoDefaults
+
+RightTitleButton  "/usr/share/themes/NumixDarker/openbox-3/desk.xbm" = f.menu "windowmenu"
+LeftTitleButton "/usr/share/themes/NumixDarker/openbox-3/max.xbm" = f.menu "defops"
+
+
+
+ShowIconManager
+
+OpaqueMove
+NoHighlight
+UsePPosition "on"
+NoSaveUnders
+XORvalue 1
+InterpolateMenuColors
+Zoom 32
+
+NoGrabServer
+RestartPreviousState
+#DecorateTransients
+TitleFont "-*-terminus-*-*-*-*-*-*-*-*-*-*-*-*"
+ResizeFont "-*-terminus-*-*-*-*-*-*-*-*-*-*-*-*"
+MenuFont "-*-terminus-*-*-*-*-*-*-*-*-*-*-*-*"
+IconFont "-*-terminus-medium-r-normal--*-*-*-*-*-*-*-*"
+IconManagerFont "-*-terminus-medium-r-normal--*-*-*-*-*"
+
+#ClientBorderWidth
+
+
+AutoRaise
+{
+#	"x-terminal-emulator"
+}
+Color
+{
+    BorderColor "grey10"
+    DefaultBackground "black"
+    DefaultForeground "grey10"
+    TitleBackground "black"
+    TitleForeground "#838383"
+    MenuBackground "black"
+    MenuForeground "#313131"
+    MenuBorderColor "#313131"
+    MenuShadowColor "grey10"
+    MenuTitleBackground "grey30"
+    MenuTitleForeground "black"
+    IconBackground "black"
+    IconForeground "grey30"
+    IconBorderColor "grey10"
+    IconManagerBackground "black"
+    IconManagerForeground "grey10"
+    IconManagerHighlight "grey30"
+}
+
+#
+# Define some useful functions for motion-based actions.
+#
+MoveDelta 3
+Function "move-or-lower" { f.move f.deltastop f.lower }
+Function "move-or-raise" { f.move f.deltastop f.raise }
+Function "move-or-iconify" { f.move f.deltastop f.iconify }
+
+#
+# Set some useful bindings.  Sort of uwm-ish, sort of simple-button-ish
+#
+Button3 = : root : f.menu "defops"
+Button1 = : root : f.menu "winops"
+Button1 = c : window : f.move
+Button3 = c : window : f.resize
+Button3 = s : window : f.fullzoom
+
+Button1 = m : window|icon : f.function "move-or-lower"
+Button2 = m : window|icon : f.iconify
+Button3 = m : window|icon : f.function "move-or-raise"
+
+Button1 = : title : f.function "move-or-raise"
+Button2 = : title : f.raiselower
+
+Button1 = : icon : f.function "move-or-iconify"
+Button2 = : icon : f.iconify
+
+Button1 = : iconmgr : f.iconify
+Button2 = : iconmgr : f.iconify
+
+
+NoTitle				# little programs that look like icons
+{
+ "TWM Icon Manager"
+ "Tint2" 
+ "xclock"
+  "xbiff"
+  "xload"
+  "oclock"
+  "xcutsel"
+  "XCalendar"
+  "xeyes"
+  "xlogout"
+}
+#
+# And a menus with the usual things
+#
+menu "defops"
+{
+"LINUXBBQ"	f.title
+""		f.nop
+"TERMINAL"		f.exec "exec x-terminal-emulator &"
+"TMUX"			f.exec "exec x-terminal-emulator -e tmux &"
+"EMACS"                  f.exec "exec x-terminal-emulator -e emacs -nw &"
+"W3M BROWSER"		f.exec "exec x-terminal-emulator -e w3m http://startpage.com &"
+"FILE MANAGER"		f.exec "exec x-terminal-emulator -e ranger &"
+"CLOCK"		f.exec "exec x-terminal-emulator -geometry 34x9 -e tty-clock &"
+""		f.nop
+"CLI APPS"	f.menu "cliapps"
+"EDIT MENU"	f.exec "exec x-terminal-emulator -e emacs ~/.twmrc &"
+"KILL"		f.destroy
+""		f.nop
+"RESTART"	f.restart
+"EXIT"		f.quit
+}
+
+menu "cliapps"
+{
+"MENU"         f.exec "exec x-terminal-emulator -geometry 60x20 -e bbq &"
+"RADIO"         f.exec "exec x-terminal-emulator -geometry 60x20 -e bbqradio &"
+"IRSSI"		f.exec "exec x-terminal-emulator -e irssi &"
+}
+
+menu "winops"
+{
+"Iconify"	f.iconify
+"Resize"	f.resize
+"Move"		f.move
+"Raise"		f.raise
+"Lower"		f.lower
+""		f.nop
+"Focus"		f.focus
+"Unfocus"	f.unfocus
+"Show Iconmgr"	f.showiconmgr
+"Hide Iconmgr"	f.hideiconmgr
+}
+
+NoTitle
+{
+#	"x-terminal-emulator"
+}
+
+Cursors
+{
+                       Frame           "top_left_arrow"
+                       Title           "top_left_arrow"
+                       Icon            "top_left_arrow"
+                       IconMgr "top_left_arrow"
+                       Move            "fleur"
+                       Resize          "fleur"
+                       Menu            "top_left_arrow"
+                       Button          "top_left_arrow"
+                       Wait            "watch"
+                       Select          "dot"
+                       Destroy "pirate"
+}
+
+
+menu "windowmenu"
+{
+"[X]" 		f.destroy
+"[ ]"		f.fullzoom
+"[?]"		f.resize
+"[^]"		f.topzoom
+"[_]"		f.bottomzoom
+"[<]"		f.leftzoom
+"[>]"		f.rightzoom
+}
+
